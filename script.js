@@ -52,17 +52,13 @@ const gameBoard = (function () {
             board[event.target.dataset.cell - 1] = currentPlayer.sign;
             event.target.textContent = board[event.target.dataset.cell - 1];
         }
-        console.log(player1.playerTurn);
-        console.log(player2.playerTurn);
-        console.log(currentPlayer);
-
+        // console.log(player1.playerTurn);
+        // console.log(player2.playerTurn);
+        // console.log(currentPlayer);
         decideWinner();
         gameState && nextPlayer();
-
-        // getCurrentPlayer();
     }
     function decideWinner() {
-        //need logic
         if (
             (board[0] == currentPlayer.sign &&
                 board[1] == currentPlayer.sign &&
@@ -90,7 +86,7 @@ const gameBoard = (function () {
                 board[6] == currentPlayer.sign)
         ) {
             gameState = false;
-            // events.emit("displayButton");
+            events.emit("displayButton");
             events.emit("winnerFound", currentPlayer);
         }
     }
@@ -101,9 +97,8 @@ const gameBoard = (function () {
         currentPlayer = player1.playerTurn ? player1 : player2;
         events.emit("setplayer", currentPlayer);
     }
-    function getCurrentPlayer() {}
     function gameRestart() {
-        // events.emit("displayButton");
+        events.emit("displayButton");
         board = ["", "", "", "", "", "", "", "", ""];
         gameState = true;
         currentPlayer = player1;
@@ -119,10 +114,11 @@ const gameBoard = (function () {
 const displayController = (function () {
     const display = document.querySelector(".display");
     const restartButton = document.querySelector("#restart");
-    // restartButton.classList.add("hidden");
+    restartButton.classList.add("hidden");
     restartButton.addEventListener("click", () => {
         events.emit("restartGame");
     });
+    renderCurrentPlayer(player1);
     //bindevent
     events.on("winnerFound", renderWinner);
     events.on("setplayer", renderCurrentPlayer);
@@ -143,4 +139,4 @@ const displayController = (function () {
 })();
 
 //ability to change who is starting
-events.emit("setplayer", player1);
+// events.emit("setplayer", player1);
