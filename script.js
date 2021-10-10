@@ -37,26 +37,25 @@ const gameBoard = (function () {
     let gameState = true;
     let currentPlayer = player1;
     //cache dom
-    getCurrentPlayer();
 
     //
     events.on("restartGame", gameRestart);
 
     const cells = document.querySelectorAll(".card");
     cells.forEach((cell) => {
-        cell.addEventListener("click", replace);
+        cell.addEventListener("click", onCellClick);
     });
 
-    function replace(event) {
+    function onCellClick(event) {
         if (gameState && event.target.textContent == "") {
             board[event.target.dataset.cell - 1] = currentPlayer.sign;
             event.target.textContent = board[event.target.dataset.cell - 1];
         }
-        stopGame();
+        decideWinner();
         // nextPlayer();
         // getCurrentPlayer();
     }
-    function stopGame() {
+    function decideWinner() {
         //need logic
         if (board[0] == "X" && board[1] == "X" && board[2] == "X") {
             gameState = false;
@@ -72,7 +71,8 @@ const gameBoard = (function () {
         board = ["", "", "", "", "", "", "", "", ""];
         gameState = true;
         currentPlayer = player1;
-        cells.forEach((cell) => (cell.textContent = ""));
+        cells.forEach((cell, index) => (cell.textContent = `${board[index]}`));
+        // events.emit("setplayer");
     }
     return {
         board,
