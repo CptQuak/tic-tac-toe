@@ -6,4 +6,25 @@
 body {
     background-color: #555;
     color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #999;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0.2rem 0.2rem 5px black;
+}
+
+.gameboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+.gameboard > * {
+    padding: 1rem;
+    font-size: 2rem;
 }
